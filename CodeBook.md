@@ -1,12 +1,6 @@
----
-title: "CodeBook"
-author: "Faizan Ahmed"
-date: "Sunday, April 26, 2015"
-output:
-  html_document:
-    fig_caption: yes
-    keep_md: yes
----
+# CodeBook
+Faizan Ahmed  
+Sunday, April 26, 2015  
 
 Here is the code book.
 
