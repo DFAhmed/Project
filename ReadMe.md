@@ -1,15 +1,11 @@
----
-title: "GettingandCleaningData"
-author: "Faizan Ahmed"
-date: "Sunday, April 26, 2015"
-output:
-  html_document:
-    keep_md: yes
----
+# GettingandCleaningData
+Faizan Ahmed  
+Sunday, April 26, 2015  
 
 The first step is to load the data. Note that I have already unzipped the data files and saved them to the local disk with all folders copied to the folder 'Data'
 
-```{r}
+
+```r
 # First load the data
 x_train<-read.table("D:/Coursera/GettingandCleaningData/Data/train/X_train.txt")
 y_train<-read.table("D:/Coursera/GettingandCleaningData/Data/train/y_train.txt")
@@ -23,7 +19,8 @@ train_subject<-read.table("D:/Coursera/GettingandCleaningData/Data/train/subject
 
 Now I will merge test and train set.
 
-```{r}
+
+```r
 #merging test and train data
 
 x_merged<-rbind(x_train,x_test)
@@ -31,14 +28,16 @@ y_merged<-rbind(y_train,y_test)
 subjects_merged<-rbind(train_subject,test_subject)
 ```
 Now I need to identify those variables that contains mean and standard deviation(std). To do this fist I load the list of features
-```{r}
+
+```r
 # Reading features related to mean and std.
 
 feature_names<-read.table("D:/Coursera/GettingandCleaningData/Data/features.txt")
 ```
 
 Using `grep` function I can identify those variables that contains 'mean' and 'std' of the data.
-```{r}
+
+```r
 names_idx<-rep(NA,1)
 # Getting column names first
 k<-1
@@ -51,13 +50,14 @@ for(i in 1:nrow(feature_names)){
 ```
 Now when I have indices of variables containing mean and std. Now I extract data that contains mean and std. Note that 'subject' and activity are still not merged.
 
-```{r}
+
+```r
 # Getting only mean and std related data
 mean_Data<-x_merged[,names_idx]
-
 ```
 Assigning names to coulmns
-```{r}
+
+```r
 # Assigning names to coulmns
 colnames(mean_Data)<-feature_names[names_idx,2]
 # Merging activity with data
@@ -70,17 +70,25 @@ colnames(all_merged)[2]<-'Activity'
 ```
 
 Now the main task is to replac e activity code with its proper name. Here how I do it..
-```{r}
+
+```r
 # Replacing Activity with name..
 activity_list<-c('Walking','WalkingUpstair','WalkingDownstair','Sitting','Standing','Laying')
 length(activity_list)
+```
+
+```
+## [1] 6
+```
+
+```r
 for(i in 1:6){
   all_merged$Activity[all_merged$Activity==i]<-activity_list[i]
 }
-
 ```
 Finally, I am creating a tidy data that contains each subject with corrsponding activities and the mean of each subject per activity. 
-```{r}
+
+```r
 # Creating empty variable name
 tidy_data<-data.frame(matrix(NA, nrow = 30, ncol = 81))
 # Here Finally i will create tidy data in which COlumn 1 sill be subject name, column 2 will be 
@@ -101,12 +109,19 @@ for(subject in 1:30){
     k<-k+1
   }
 }
-
 ```
 In a final step I rename the variables.
-```{r}
+
+```r
 # Removing () from the names of the column, and changing mean to Mean and std tp Std for better reading
 length(names(all_merged))
+```
+
+```
+## [1] 81
+```
+
+```r
 column_names<-gsub("-mean\\()-","Mean",names(all_merged))
 column_names<-gsub("-mean\\()","Mean",column_names)
 column_names<-gsub("-std\\()","Std",column_names)
@@ -116,14 +131,13 @@ column_names<-gsub("\\()","",column_names)
 
 # Renaming variables
 colnames(tidy_data)<-column_names
-
 ```
 
 Finally saving the file to a local directory..
 
-```{r}
-write.csv(tidy_data,'D:/Coursera/GettingandCleaningData/Data/tidy_data.txt')
 
+```r
+write.csv(tidy_data,'D:/Coursera/GettingandCleaningData/Data/tidy_data.txt')
 ```
 
 
