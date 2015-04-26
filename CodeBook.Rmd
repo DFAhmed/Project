@@ -1,0 +1,15 @@
+---
+title: "CodeBook"
+author: "Faizan Ahmed"
+date: "Sunday, April 26, 2015"
+output: html_document
+---
+
+Here is the code book.
+
+- `Subject` is the number of subject
+- `Activity` is the activity
+- In all variables the following abbreviations are used: t=total, Body=Body,Gravity=Gravity, Acc=Accelelrometer, Gyro=Gyroscope,Jerk= Jerk(derivative of acceleration), Mean=Mean, Std=standard deviation, Mag=magnitude, f=filtered ,and Freq=frequency
+- Each variable is combinnation of some of terms given above. Forexample: `tBodyAccMeanX` stand for mean of total body acceleration in the dorection `X`.
+
+
